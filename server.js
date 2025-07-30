@@ -46,6 +46,17 @@ app.get("/search/:what", async (req, res) => {
     res.status(500).json({ error: "cannot fetch Deezer track" });
   }
 });
+app.get("/Artist/:name", async (req, res) => {
+  try {
+    let name = req.params.name;
+    let link = `https://api.deezer.com/artist/${name}`;
+    const response = await axios.get(link);
+    res.json(response.data);
+  } catch (err) {
+    console.error("Error fetching track:", err.message);
+    res.status(500).json({ error: "cannot fetch Deezer track" });
+  }
+});
 
 app.listen(5000, () => {
   console.log("Proxy server running on http://localhost:5000");
