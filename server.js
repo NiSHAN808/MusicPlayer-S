@@ -15,7 +15,12 @@ const app = express();
 // # Get album info
 // GET https://api.deezer.com/album/302127
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://nishanbeats.onrender.com", // Render frontend domain
+    credentials: true,
+  })
+);
 
 app.get("/deezer/chart", async (req, res) => {
   try {
@@ -57,7 +62,7 @@ app.get("/Artist/:name", async (req, res) => {
     res.status(500).json({ error: "cannot fetch Deezer track" });
   }
 });
-
-app.listen(5000, () => {
-  console.log("Proxy server running on http://localhost:5000");
+const port = process.env.PORT || 5000;
+app.listen(port, () => {
+  console.log(`Proxy server running on ${port}`);
 });
